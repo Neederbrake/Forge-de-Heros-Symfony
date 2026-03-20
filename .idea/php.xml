@@ -141,9 +141,11 @@
       <path value="$PROJECT_DIR$/forge-heros-back/vendor/myclabs/deep-copy" />
       <path value="$PROJECT_DIR$/forge-heros-back/vendor/composer" />
       <path value="$PROJECT_DIR$/forge-heros-back/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/forge-heros-back/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/forge-heros-back/vendor/doctrine/doctrine-fixtures-bundle" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.5">
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.1">
     <option name="suggestChangeDefaultLanguageLevel" value="false" />
   </component>
   <component name="PhpStanOptionsConfiguration">
