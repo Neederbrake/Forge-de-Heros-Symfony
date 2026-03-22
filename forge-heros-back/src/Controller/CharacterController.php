@@ -17,6 +17,7 @@ final class CharacterController extends AbstractController
     #[Route(name: 'app_character_index', methods: ['GET'])]
     public function index(CharacterRepository $characterRepository): Response
     {
+        // affiche la liste des personnages
         return $this->render('character/index.html.twig', [
             'characters' => $characterRepository->findAll(),
         ]);
@@ -25,32 +26,34 @@ final class CharacterController extends AbstractController
     #[Route('/new', name: 'app_character_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // cree un nouveau personnage
         $character = new Character();
         $form = $this->createForm(CharacterType::class, $character);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // on recupere le fichier envoye
+            // recupere le fichier image envoye
             $imageFile = $form->get('image')->getData();
 
-            // si une image a ete envoyee
+            // traite l image si elle existe
             if ($imageFile) {
-                // on cree un nom unique pour eviter les doublons
+                // cree un nom unique pour eviter les doublons
                 $newFilename = uniqid().'.'.$imageFile->guessExtension();
 
-                // on deplace le fichier dans le dossier public
+                // deplace l image dans le dossier public
                 $imageFile->move(
                     $this->getParameter('kernel.project_dir').'/public/uploads/characters',
                     $newFilename
                 );
 
-                // on sauvegarde juste le nom du fichier en base
+                // stocke le nom du fichier en base
                 $character->setImage($newFilename);
             }
 
-            // on lie le personnage au joueur connecte
+            // associe le personnage au joueur connecte
             $character->setUser($this->getUser());
 
+            // enregistre le personnage
             $character->setUser($this->getUser());
             $entityManager->persist($character);
             $entityManager->flush();
@@ -66,6 +69,7 @@ final class CharacterController extends AbstractController
     #[Route('/{id}', name: 'app_character_show', methods: ['GET'])]
     public function show(Character $character): Response
     {
+        // affiche le detail du personnage
         return $this->render('character/show.html.twig', [
             'character' => $character,
         ]);
@@ -74,10 +78,12 @@ final class CharacterController extends AbstractController
     #[Route('/{id}/edit', name: 'app_character_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Character $character, EntityManagerInterface $entityManager): Response
     {
+        // charge le formulaire d edition
         $form = $this->createForm(CharacterType::class, $character);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // met a jour le personnage
             $entityManager->flush();
 
             return $this->redirectToRoute('app_character_index', [], Response::HTTP_SEE_OTHER);
@@ -92,6 +98,7 @@ final class CharacterController extends AbstractController
     #[Route('/{id}', name: 'app_character_delete', methods: ['POST'])]
     public function delete(Request $request, Character $character, EntityManagerInterface $entityManager): Response
     {
+        // supprime le personnage si le token est valide
         if ($this->isCsrfTokenValid('delete'.$character->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($character);
             $entityManager->flush();

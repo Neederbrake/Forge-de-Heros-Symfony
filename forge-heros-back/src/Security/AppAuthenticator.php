@@ -28,10 +28,13 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
+        // recupere l email saisi
         $email = $request->getPayload()->getString('email');
 
+        // garde l email pour le prochain affichage
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
 
+        // construit le passport pour l authentification
         return new Passport(
             new UserBadge($email),
             new PasswordCredentials($request->getPayload()->getString('password')),
@@ -44,13 +47,14 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        // redirige vers la page initiale si elle existe
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
+        // exemple de redirection manuelle
         // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        // redirige vers la page d accueil une fois connecte
+        // redirige vers l accueil apres connexion
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
     }
 

@@ -66,11 +66,13 @@ class Skill
      */
     public function getCharacterClasses(): Collection
     {
+        // retourne les classes liees a cette competence
         return $this->characterClasses;
     }
 
     public function addCharacterClass(CharacterClass $characterClass): static
     {
+        // ajoute la classe et met a jour le lien inverse
         if (!$this->characterClasses->contains($characterClass)) {
             $this->characterClasses->add($characterClass);
             $characterClass->addSkill($this);
@@ -81,6 +83,7 @@ class Skill
 
     public function removeCharacterClass(CharacterClass $characterClass): static
     {
+        // retire la classe et nettoie le lien inverse
         if ($this->characterClasses->removeElement($characterClass)) {
             $characterClass->removeSkill($this);
         }
@@ -90,7 +93,7 @@ class Skill
 
     public function __toString(): string
     {
-        // Utilise 'getNom' ou 'getName' selon ton code
+        // utilise getname pour afficher la competence
         return $this->getName() ?? '';
     }
 }

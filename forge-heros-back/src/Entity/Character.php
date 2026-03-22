@@ -66,6 +66,7 @@ class Character
 
     public function __construct()
     {
+        // initialise la collection des groupes
         $this->parties = new ArrayCollection();
     }
 
@@ -235,11 +236,13 @@ class Character
      */
     public function getParties(): Collection
     {
+        // retourne les groupes du personnage
         return $this->parties;
     }
 
     public function addParty(Party $party): static
     {
+        // ajoute le personnage dans un groupe
         if (!$this->parties->contains($party)) {
             $this->parties->add($party);
             $party->addCharacter($this);
@@ -250,6 +253,7 @@ class Character
 
     public function removeParty(Party $party): static
     {
+        // retire le personnage du groupe
         if ($this->parties->removeElement($party)) {
             $party->removeCharacter($this);
         }

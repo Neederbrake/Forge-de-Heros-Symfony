@@ -17,6 +17,7 @@ class CharacterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // construit le formulaire de creation du personnage
         $builder
             ->add('name')
             ->add('level')
@@ -28,9 +29,9 @@ class CharacterType extends AbstractType
             ->add('charisma')
             ->add('healthPoints')
             ->add('image', FileType::class, [
-                // champ non relie directement a la base
+                // champ non lie a la base
                 'mapped' => false,
-                // champ non obligatoire
+                // champ optionnel
                 'required' => false,
             ])
             ->add('race', EntityType::class, [

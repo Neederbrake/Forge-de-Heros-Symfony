@@ -67,11 +67,13 @@ class Race
      */
     public function getCharacters(): Collection
     {
+        // retourne la liste des personnages lies a la race
         return $this->characters;
     }
 
     public function addCharacter(Character $character): static
     {
+        // ajoute le personnage et met a jour le lien inverse
         if (!$this->characters->contains($character)) {
             $this->characters->add($character);
             $character->setRace($this);
@@ -82,8 +84,9 @@ class Race
 
     public function removeCharacter(Character $character): static
     {
+        // retire le personnage et nettoie le lien inverse
         if ($this->characters->removeElement($character)) {
-            // set the owning side to null (unless already changed)
+            // detache la race du personnage si besoin
             if ($character->getRace() === $this) {
                 $character->setRace(null);
             }
@@ -94,7 +97,7 @@ class Race
 
     public function __toString(): string
     {
-        // on dit a symfony d'utiliser le nom pour afficher la race
+        // utilise le nom pour afficher la race
         return $this->getName() ?? '';
     }
 }

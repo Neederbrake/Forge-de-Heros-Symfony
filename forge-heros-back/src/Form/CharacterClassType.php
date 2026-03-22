@@ -13,11 +13,13 @@ class CharacterClassType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // construit le formulaire de classe
         $builder
             ->add('name')
             ->add('description')
             ->add('healthDice')
             ->add('skills', EntityType::class, [
+                // champ de selection multiple
                 'class' => Skill::class,
                 'choice_label' => 'name',
                 'multiple' => true,

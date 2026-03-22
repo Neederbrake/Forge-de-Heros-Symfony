@@ -11,6 +11,7 @@ class RaceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // construit le formulaire de race
         $builder
             ->add('name')
             ->add('description')

@@ -10,10 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-// import necessaire pour verifier le role
+// import requis pour verifier le role
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-// blocage de toutes les routes de ce fichier sauf pour l admin
+// limite toutes les routes a l admin
 #[IsGranted('ROLE_ADMIN')]
 #[Route('/race')]
 final class RaceController extends AbstractController
@@ -21,6 +21,7 @@ final class RaceController extends AbstractController
     #[Route(name: 'app_race_index', methods: ['GET'])]
     public function index(RaceRepository $raceRepository): Response
     {
+        // affiche la liste des races
         return $this->render('race/index.html.twig', [
             'races' => $raceRepository->findAll(),
         ]);
@@ -29,11 +30,13 @@ final class RaceController extends AbstractController
     #[Route('/new', name: 'app_race_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // cree une nouvelle race
         $race = new Race();
         $form = $this->createForm(RaceType::class, $race);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // enregistre la race en base
             $entityManager->persist($race);
             $entityManager->flush();
 
@@ -49,6 +52,7 @@ final class RaceController extends AbstractController
     #[Route('/{id}', name: 'app_race_show', methods: ['GET'])]
     public function show(Race $race): Response
     {
+        // affiche le detail d une race
         return $this->render('race/show.html.twig', [
             'race' => $race,
         ]);
@@ -57,10 +61,12 @@ final class RaceController extends AbstractController
     #[Route('/{id}/edit', name: 'app_race_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Race $race, EntityManagerInterface $entityManager): Response
     {
+        // charge le formulaire d edition
         $form = $this->createForm(RaceType::class, $race);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // met a jour la race
             $entityManager->flush();
 
             return $this->redirectToRoute('app_race_index', [], Response::HTTP_SEE_OTHER);
@@ -75,6 +81,7 @@ final class RaceController extends AbstractController
     #[Route('/{id}', name: 'app_race_delete', methods: ['POST'])]
     public function delete(Request $request, Race $race, EntityManagerInterface $entityManager): Response
     {
+        // supprime la race si le token est valide
         if ($this->isCsrfTokenValid('delete'.$race->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($race);
             $entityManager->flush();

@@ -52,6 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+        // initialise les collections
         $this->parties = new ArrayCollection();
         $this->characters = new ArrayCollection();
     }
@@ -80,6 +81,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
+        // identifiant unique pour symfony
         return (string) $this->email;
     }
 
@@ -89,7 +91,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
+        // ajoute le role de base si absent
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -123,7 +125,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[\Deprecated]
     public function eraseCredentials(): void
     {
-        // @deprecated, to be removed when upgrading to Symfony 8
+        // obsolete a supprimer a la migration symfony 8
     }
 
     public function getUsername(): ?string
@@ -143,11 +145,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getParties(): Collection
     {
+        // retourne les groupes crees par l utilisateur
         return $this->parties;
     }
 
     public function addParty(Party $party): static
     {
+        // ajoute un groupe et met a jour le createur
         if (!$this->parties->contains($party)) {
             $this->parties->add($party);
             $party->setCreator($this);
@@ -158,8 +162,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeParty(Party $party): static
     {
+        // retire un groupe et nettoie le createur
         if ($this->parties->removeElement($party)) {
-            // set the owning side to null (unless already changed)
+            // detache l utilisateur si besoin
             if ($party->getCreator() === $this) {
                 $party->setCreator(null);
             }
@@ -173,11 +178,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getCharacters(): Collection
     {
+        // retourne les personnages de l utilisateur
         return $this->characters;
     }
 
     public function addCharacter(Character $character): static
     {
+        // ajoute un personnage et met a jour le lien inverse
         if (!$this->characters->contains($character)) {
             $this->characters->add($character);
             $character->setUser($this);
@@ -188,8 +195,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeCharacter(Character $character): static
     {
+        // retire un personnage et nettoie le lien inverse
         if ($this->characters->removeElement($character)) {
-            // set the owning side to null (unless already changed)
+            // detache l utilisateur si besoin
             if ($character->getUser() === $this) {
                 $character->setUser(null);
             }

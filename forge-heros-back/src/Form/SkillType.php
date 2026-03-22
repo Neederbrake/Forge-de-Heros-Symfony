@@ -13,6 +13,7 @@ class SkillType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // construit le formulaire de competence
         $builder
             ->add('name')
             ->add('ability')

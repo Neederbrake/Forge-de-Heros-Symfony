@@ -1,13 +1,13 @@
-# lance le serveur web
+# demarre le serveur web symfony
 symfony server:start
 
-# ou avec php si symfony bug
+# demarre le serveur via php si symfony bug
 php -S 127.0.0.1:8000 -t public
 
-# vide la memoire
+# vide le cache
 php bin/console cache:clear
 
-# liste toutes les urls du site
+# liste toutes les routes
 php bin/console debug:router
 
 L'Entrée (Accueil & Connexion)
@@ -43,15 +43,17 @@ autre: user1
 user1@gmail.com
 mdp=user123
 
-# telecharge les dependances
+# installe les dependances
 composer install
 
 # cree la base vide
 php bin/console doctrine:database:create
 
-# construit les tables
+# lance les migrations
 php bin/console doctrine:migrations:migrate -n
 
+
+dans le php.init
 // pour l upload des images
 extension=fileinfo
 

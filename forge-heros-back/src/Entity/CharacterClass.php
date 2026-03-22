@@ -40,6 +40,7 @@ class CharacterClass
 
     public function __construct()
     {
+        // initialise les collections
         $this->characters = new ArrayCollection();
         $this->skills = new ArrayCollection();
     }
@@ -90,11 +91,13 @@ class CharacterClass
      */
     public function getCharacters(): Collection
     {
+        // retourne les personnages de cette classe
         return $this->characters;
     }
 
     public function addCharacter(Character $character): static
     {
+        // ajoute un personnage a la classe
         if (!$this->characters->contains($character)) {
             $this->characters->add($character);
             $character->setCharacterClass($this);
@@ -105,8 +108,9 @@ class CharacterClass
 
     public function removeCharacter(Character $character): static
     {
+        // retire un personnage de la classe
         if ($this->characters->removeElement($character)) {
-            // set the owning side to null (unless already changed)
+            // detache la classe si besoin
             if ($character->getCharacterClass() === $this) {
                 $character->setCharacterClass(null);
             }
@@ -120,11 +124,13 @@ class CharacterClass
      */
     public function getSkills(): Collection
     {
+        // retourne les competences de la classe
         return $this->skills;
     }
 
     public function addSkill(Skill $skill): static
     {
+        // ajoute une competence
         if (!$this->skills->contains($skill)) {
             $this->skills->add($skill);
         }
@@ -134,6 +140,7 @@ class CharacterClass
 
     public function removeSkill(Skill $skill): static
     {
+        // retire une competence
         $this->skills->removeElement($skill);
 
         return $this;
@@ -141,6 +148,7 @@ class CharacterClass
 
     public function __toString(): string
     {
+        // affiche le nom de la classe
         return $this->getName() ?? '';
     }
 
