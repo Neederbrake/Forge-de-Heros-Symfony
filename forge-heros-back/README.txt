@@ -51,3 +51,16 @@ php bin/console doctrine:database:create
 
 # construit les tables
 php bin/console doctrine:migrations:migrate -n
+
+// pour l upload des images
+extension=fileinfo
+
+// pour les formulaires symfony
+extension=intl
+
+// pour les caracteres speciaux
+extension=mbstring
+
+// pour la base de donnees sqlite
+extension=pdo_sqlite
+extension=sqlite3
