@@ -1,8 +1,7 @@
-﻿<?php
-
+<?php
 namespace App\DataFixtures;
 
-use App\Entity\raceTemps;
+use App\Entity\Race;
 use App\Entity\CharacterClass;
 use App\Entity\Skill;
 use Doctrine\Bundle\FixturesBundle\Fixture;
