@@ -75,6 +75,10 @@ final class PartyController extends AbstractController
     #[Route('/{id}/edit', name: 'app_party_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Party $party, EntityManagerInterface $entityManager): Response
     {
+        // bloque si pas proprietaire ni admin
+        if ($party->getCreator() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('acces refuse');
+        }
         $form = $this->createForm(PartyType::class, $party);
         $form->handleRequest($request);
 
@@ -93,6 +97,10 @@ final class PartyController extends AbstractController
     #[Route('/{id}', name: 'app_party_delete', methods: ['POST'])]
     public function delete(Request $request, Party $party, EntityManagerInterface $entityManager): Response
     {
+        // bloque si pas proprietaire ni admin
+        if ($party->getCreator() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('acces refuse');
+        }
         if ($this->isCsrfTokenValid('delete'.$party->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($party);
             $entityManager->flush();

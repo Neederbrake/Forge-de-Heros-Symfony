@@ -38,7 +38,11 @@
                 <td>{{ party.maxSize }}</td>
                 <td>
                     <a href="{{ path('app_party_show', {'id': party.id}) }}">show</a>
-                    <a href="{{ path('app_party_edit', {'id': party.id}) }}">edit</a>
+
+                    {# on cache le bouton edit pour les autres #}
+                    {% if party.creator == app.user or is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_party_edit', {'id': party.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

@@ -1,11 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Character{% endblock %}
+{% block title %}New character{% endblock %}
 
 {% block body %}
-    <h1>Create new Character</h1>
+    <h1>create new character</h1>
 
-    {{ include('character/_form.html.twig') }}
+    {# safe post form open #}
+    {{ form_start(form) }}
 
+    {# show symfony fields #}
+    {{ form_widget(form) }}
+
+    {# official submit btn #}
+    <button style="margin-top: 15px;" type="submit">save</button>
+
+    {{ form_end(form) }}
+
+    {# point counter box #}
+    <div style="background: #f9f9f9; padding: 15px; margin-top: 20px; border: 1px solid #ddd;">
+        <h3>point counter (point buy)</h3>
+        <p>reminder: stats between 8 and 15. total cost: 27 points.</p>
+        <p><strong>total used: <span id="point-total" style="color: red;">0</span> / 27</strong></p>
+    </div>
+
+    <br>
     <a href="{{ path('app_character_index') }}">back to list</a>
+
+    {# live calc script #}
+    <script>
+        // get number inputs
+        const inputs = document.querySelectorAll('input[type="number"]');
+        const totalSpan = document.getElementById('point-total');
+
+        function calculatePoints() {
+            let total = 0;
+            inputs.forEach(input => {
+                // ignore level field
+                if (input.id.includes('level')) return;
+
+                let val = parseInt(input.value) || 0;
+                if (val >= 8) {
+                    total += (val - 8);
+                }
+            });
+
+            // show total
+            totalSpan.textContent = total;
+
+            // set color
+            if (total === 27) {
+                totalSpan.style.color = 'green';
+            } else {
+                totalSpan.style.color = 'red';
+            }
+        }
+
+        // update on type
+        inputs.forEach(input => {
+            input.addEventListener('input', calculatePoints);
+        });
+
+        // initial calc
+        calculatePoints();
+    </script>
 {% endblock %}

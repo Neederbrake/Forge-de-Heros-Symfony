@@ -48,6 +48,15 @@
         </div>
     {% endfor %}
 
+    {# boucle pour afficher les alertes du serveur #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div style="padding: 15px; margin-bottom: 20px; border: 2px solid {% if label == 'error' %}red{% else %}green{% endif %}; background-color: {% if label == 'error' %}#fee{% else %}#efe{% endif %}; font-weight: bold; text-align: center;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
     {# le contenu de la page vient se mettre juste en dessous #}
     {% block body %}{% endblock %}
 </div>

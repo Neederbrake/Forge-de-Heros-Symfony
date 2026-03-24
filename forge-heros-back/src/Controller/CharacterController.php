@@ -69,14 +69,15 @@ final class CharacterController extends AbstractController
     #[Route('/new', name: 'app_character_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // instancie nouveau heros
+        // create hero
         $character = new Character();
         $form = $this->createForm(CharacterType::class, $character);
         $form->handleRequest($request);
 
+        // check form valid
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // tableau des stats
+            // get stats
             $stats = [
                 $character->getStrength(),
                 $character->getDexterity(),
@@ -89,7 +90,7 @@ final class CharacterController extends AbstractController
             $totalCost = 0;
             $isValid = true;
 
-            // calcule points
+            // calc cost
             foreach ($stats as $stat) {
                 if ($stat < 8 || $stat > 15) {
                     $isValid = false;
@@ -97,24 +98,22 @@ final class CharacterController extends AbstractController
                 $totalCost += ($stat - 8);
             }
 
-            // bloque si triche
+            // block if point error
             if (!$isValid || $totalCost !== 27) {
-                $this->addFlash('error', 'les stats doivent couter exactement 27 points et etre entre 8 et 15.');
+                $this->addFlash('error', 'invalid stats: total of 27 points required (between 8 and 15).');
                 return $this->render('character/new.html.twig', [
                     'character' => $character,
                     'form' => $form,
                 ]);
             }
 
-            // calcule pv
-            $con = $character->getConstitution();
-            $conMod = floor(($con - 10) / 2);
+            // calc hp
+            $conMod = floor(($character->getConstitution() - 10) / 2);
             $dice = $character->getCharacterClass()->getHealthDice();
             $character->setHealthPoints($dice + $conMod);
 
-            // gere upload image
+            // save image
             $imageFile = $form->get('image')->getData();
-
             if ($imageFile) {
                 $newFilename = uniqid().'.'.$imageFile->guessExtension();
                 $imageFile->move(
@@ -124,7 +123,7 @@ final class CharacterController extends AbstractController
                 $character->setImage($newFilename);
             }
 
-            // lie joueur et sauvegarde
+            // save to db
             $character->setUser($this->getUser());
             $entityManager->persist($character);
             $entityManager->flush();
@@ -132,6 +131,12 @@ final class CharacterController extends AbstractController
             return $this->redirectToRoute('app_character_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        // silent error
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('error', 'form error (image too large or invalid field).');
+        }
+
+        // show page
         return $this->render('character/new.html.twig', [
             'character' => $character,
             'form' => $form,

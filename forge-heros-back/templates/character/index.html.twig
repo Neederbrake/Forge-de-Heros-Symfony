@@ -51,6 +51,8 @@
                 <th>Wisdom</th>
                 <th>Charisma</th>
                 <th>HealthPoints</th>
+                <th>Race</th>
+                <th>Class</th>
                 <th>Image</th>
                 <th>actions</th>
             </tr>
@@ -68,6 +70,8 @@
                 <td>{{ character.wisdom }}</td>
                 <td>{{ character.charisma }}</td>
                 <td>{{ character.healthPoints }}</td>
+                <td>{{ character.race.name }}</td>
+                <td>{{ character.characterClass.name }}</td>
                 <td>{{ character.image }}</td>
                 <td>
                     <a href="{{ path('app_character_show', {'id': character.id}) }}">show</a>
