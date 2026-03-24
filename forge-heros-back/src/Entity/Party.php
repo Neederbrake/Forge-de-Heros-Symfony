@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: PartyRepository::class)]
 class Party
@@ -25,9 +26,10 @@ class Party
     #[ORM\Column]
     private ?int $maxSize = null;
 
+    // correction ici : User avec majuscule
     #[ORM\ManyToOne(inversedBy: 'parties')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $creator = null;
+    private ?User $creator = null;
 
     /**
      * @var Collection<int, Character>
@@ -82,12 +84,14 @@ class Party
         return $this;
     }
 
-    public function getCreator(): ?user
+    // correction ici : retour de type User
+    public function getCreator(): ?User
     {
         return $this->creator;
     }
 
-    public function setCreator(?user $creator): static
+    // correction ici : argument de type User
+    public function setCreator(?User $creator): static
     {
         $this->creator = $creator;
 

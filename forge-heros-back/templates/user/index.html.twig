@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}liste des joueurs{% endblock %}
+
+{% block body %}
+<h1>liste des joueurs inscrits</h1>
+
+<table class="table" style="width: 100%; text-align: left; border-collapse: collapse;">
+    <thead>
+    <tr style="background-color: #f1f1f1;">
+        <th style="padding: 10px; border: 1px solid #ddd;">id</th>
+        <th style="padding: 10px; border: 1px solid #ddd;">nom (username)</th>
+        <th style="padding: 10px; border: 1px solid #ddd;">email</th>
+        <th style="padding: 10px; border: 1px solid #ddd;">roles</th>
+    </tr>
+    </thead>
+    <tbody>
+    {# boucle sur les joueurs #}
+    {% for user in users %}
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd;">{{ user.id }}</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">{{ user.username }}</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">{{ user.email }}</td>
+        <td style="padding: 10px; border: 1px solid #ddd;">
+            {# affiche les roles proprement #}
+            {{ user.roles | join(', ') }}
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="4" style="padding: 10px; text-align: center;">aucun joueur trouve.</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<br>
+<a href="{{ path('app_home') }}">retour a l accueil</a>
+{% endblock %}

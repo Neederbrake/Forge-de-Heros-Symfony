@@ -4,34 +4,45 @@ namespace App\Form;
 
 use App\Entity\Character;
 use App\Entity\CharacterClass;
-use App\Entity\Party;
 use App\Entity\Race;
-use App\Entity\user;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class CharacterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        // construit le formulaire de creation du personnage
         $builder
             ->add('name')
             ->add('level')
-            ->add('strength')
-            ->add('dexterity')
-            ->add('constitution')
-            ->add('intelligence')
-            ->add('wisdom')
-            ->add('charisma')
-            ->add('healthPoints')
+            // bride les champs html entre 8 et 15
+            ->add('strength', IntegerType::class, [
+                'attr' => ['min' => 8, 'max' => 15]
+            ])
+            ->add('dexterity', IntegerType::class, [
+                'attr' => ['min' => 8, 'max' => 15]
+            ])
+            ->add('constitution', IntegerType::class, [
+                'attr' => ['min' => 8, 'max' => 15]
+            ])
+            ->add('intelligence', IntegerType::class, [
+                'attr' => ['min' => 8, 'max' => 15]
+            ])
+            ->add('wisdom', IntegerType::class, [
+                'attr' => ['min' => 8, 'max' => 15]
+            ])
+            ->add('charisma', IntegerType::class, [
+                'attr' => ['min' => 8, 'max' => 15]
+            ])
+            // on ne demande plus les pv, le serveur les calcule !
+
+            // securise le champ image
             ->add('image', FileType::class, [
-                // champ non lie a la base
                 'mapped' => false,
-                // champ optionnel
                 'required' => false,
             ])
             ->add('race', EntityType::class, [
@@ -42,7 +53,6 @@ class CharacterType extends AbstractType
                 'class' => CharacterClass::class,
                 'choice_label' => 'name',
             ])
-
         ;
     }
 

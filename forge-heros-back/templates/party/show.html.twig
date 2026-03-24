@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Party{% endblock %}
+
+{% block body %}
+    <h1>Party</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ party.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ party.name }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ party.description }}</td>
+        </tr>
+        <tr>
+            <th>MaxSize</th>
+            <td>{{ party.maxSize }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    {# debut bloc gestion membres #}
+    <div style="margin-top: 30px; margin-bottom: 30px; padding: 20px; background: #f8f9fa; border: 1px solid #ddd;">
+        <h3>membres du groupe ({{ party.characters|length }} / {{ party.maxSize }})</h3>
+
+        <ul>
+            {# boucle sur heros du groupe #}
+            {% for char in party.characters %}
+                <li>
+                    <strong>{{ char.name }}</strong> (lvl {{ char.level }})
+
+                    {# affiche bouton si proprietaire #}
+                    {% if char.user == app.user %}
+                        <form action="{{ path('app_party_leave', {'id': party.id, 'characterId': char.id}) }}" method="post" style="display:inline;">
+                            <button type="submit" style="color:red; background:none; border:none; text-decoration:underline; cursor:pointer;">[quitter]</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% else %}
+                <li>aucun heros dans ce groupe pour le moment.</li>
+            {% endfor %}
+        </ul>
+
+        <hr>
+
+        {# verifie places disponibles #}
+        {% if party.characters|length < party.maxSize %}
+            <h4>rejoindre l aventure</h4>
+
+            {# form inscription groupe #}
+            <form action="{{ path('app_party_join', {'id': party.id}) }}" method="post">
+                <select name="character_id" required>
+                    <option value="">-- choisis un de tes heros --</option>
+
+                    {# liste heros du joueur connecte #}
+                    {% for myChar in app.user.characters %}
+                        {# cache heros deja inscrits #}
+                        {% if myChar not in party.characters %}
+                            <option value="{{ myChar.id }}">{{ myChar.name }} (lvl {{ myChar.level }})</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <button type="submit">rejoindre</button>
+            </form>
+        {% else %}
+            <p style="color:red; font-weight:bold;">ce groupe est complet !</p>
+        {% endif %}
+    </div>
+    {# fin bloc gestion membres #}
+
+    <a href="{{ path('app_party_index') }}">back to list</a>
+
+    <a href="{{ path('app_party_edit', {'id': party.id}) }}">edit</a>
+
+    {{ include('party/_delete_form.html.twig') }}
+{% endblock %}

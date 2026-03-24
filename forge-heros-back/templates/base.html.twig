@@ -27,7 +27,8 @@
             <strong>administration :</strong>
             <a href="{{ path('app_race_index') }}">races</a> |
             <a href="{{ path('app_character_class_index') }}">classes</a> |
-            <a href="{{ path('app_skill_index') }}">competences</a>
+            <a href="{{ path('app_skill_index') }}">competences</a> |
+            <a href="{{ path('app_admin_user_index') }}">joueurs</a>
         {% endif %}
 
         {# si visiteur non connecte #}
@@ -37,8 +38,17 @@
     {% endif %}
 </nav>
 
-{# ici s affichera le contenu des autres pages #}
+{# contenu des autres pages #}
 <div style="padding: 20px;">
+
+    {# boucle pour afficher les messages d erreur au dessus du contenu #}
+    {% for message in app.flashes('error') %}
+        <div style="color: red; font-weight: bold; padding: 10px; border: 2px solid red; margin-bottom: 15px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {# le contenu de la page vient se mettre juste en dessous #}
     {% block body %}{% endblock %}
 </div>
 </body>
