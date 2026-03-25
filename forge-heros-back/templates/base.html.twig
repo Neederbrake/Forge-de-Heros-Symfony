@@ -13,48 +13,53 @@
 </head>
 <body>
 {# menu de navigation global #}
-<nav style="display: flex; gap: 15px; align-items: center; padding: 10px; background: #f0f0f0;">
+<nav class="site-nav">
+    <div class="site-nav-links">
     {# lien accueil pour tous #}
-    <a href="/">accueil</a>
+    <a href="/" class="site-nav-link">accueil</a>
 
     {# menu pour les joueurs connectes #}
     {% if app.user %}
 
-        <a href="{{ path('app_character_index') }}">mes heros</a>
+        <a href="{{ path('app_character_index') }}" class="site-nav-link">mes heros</a>
         {# bouton creer heros #}
-        <a href="{{ path('app_character_new') }}" style="background: #4caf50; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px;">+ creer heros</a>
+        <a href="{{ path('app_character_new') }}" class="site-nav-link site-nav-link-cta">+ creer heros</a>
 
-        <a href="{{ path('app_party_index') }}">mes groupes</a>
+        <a href="{{ path('app_party_index') }}" class="site-nav-link">mes groupes</a>
         {# bouton creer groupe #}
-        <a href="{{ path('app_party_new') }}" style="background: #008cba; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px;">+ creer groupe</a>
+        <a href="{{ path('app_party_new') }}" class="site-nav-link site-nav-link-cta">+ creer groupe</a>
+        <a href="{{ path('app_skill_index') }}" class="site-nav-link">competences</a>
 
         {# menu special admin #}
         {% if is_granted('ROLE_ADMIN') %}
-            <span style="border-left: 1px solid #ccc; padding-left: 15px;">admin :</span>
-            <a href="{{ path('app_race_index') }}">races</a>
-            <a href="{{ path('app_character_class_index') }}">classes</a>
-            <a href="{{ path('app_skill_index') }}">competences</a>
+            <span class="site-nav-separator">admin :</span>
+            <a href="{{ path('app_race_index') }}" class="site-nav-link">races</a>
+            <a href="{{ path('app_character_class_index') }}" class="site-nav-link">classes</a>
         {% endif %}
+    </div>
 
         {# infos joueur et deconnexion #}
-        <span style="margin-left: auto;">joueur : {{ app.user.userIdentifier }}</span>
-        <a href="{{ path('app_logout') }}">deconnexion</a>
+        <div class="site-nav-user">
+            <span class="site-nav-user-id">joueur : {{ app.user.userIdentifier }}</span>
+            <a href="{{ path('app_logout') }}" class="site-nav-link">deconnexion</a>
+        </div>
 
         {# menu pour les non connectes #}
     {% else %}
-        <span style="margin-left: auto;">
-            <a href="{{ path('app_login') }}">connexion</a>
-            <a href="{{ path('app_register') }}">inscription</a>
-        </span>
+    </div>
+        <div class="site-nav-user">
+            <a href="{{ path('app_login') }}" class="site-nav-link">connexion</a>
+            <a href="{{ path('app_register') }}" class="site-nav-link">inscription</a>
+        </div>
     {% endif %}
 </nav>
 
 {# contenu des autres pages #}
-<div style="padding: 20px;">
+<main class="page-shell">
 
     {# boucle pour afficher les messages d erreur au dessus du contenu #}
     {% for message in app.flashes('error') %}
-        <div style="color: red; font-weight: bold; padding: 10px; border: 2px solid red; margin-bottom: 15px;">
+        <div class="flash-message flash-message-error">
             {{ message }}
         </div>
     {% endfor %}
@@ -62,7 +67,7 @@
     {# boucle pour afficher les alertes du serveur #}
     {% for label, messages in app.flashes %}
         {% for message in messages %}
-            <div style="padding: 15px; margin-bottom: 20px; border: 2px solid {% if label == 'error' %}red{% else %}green{% endif %}; background-color: {% if label == 'error' %}#fee{% else %}#efe{% endif %}; font-weight: bold; text-align: center;">
+            <div class="flash-message {% if label == 'error' %}flash-message-error{% else %}flash-message-success{% endif %}">
                 {{ message }}
             </div>
         {% endfor %}
@@ -70,6 +75,6 @@
 
     {# le contenu de la page vient se mettre juste en dessous #}
     {% block body %}{% endblock %}
-</div>
+</main>
 </body>
 </html>

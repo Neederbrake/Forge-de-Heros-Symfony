@@ -27,7 +27,7 @@
     </table>
 
     {# debut bloc gestion membres #}
-    <div style="margin-top: 30px; margin-bottom: 30px; padding: 20px; background: #f8f9fa; border: 1px solid #ddd;">
+    <div class="content-panel">
         <h3>membres du groupe ({{ party.characters|length }} / {{ party.maxSize }})</h3>
 
         <ul>
@@ -38,8 +38,8 @@
 
                     {# affiche bouton si proprietaire #}
                     {% if char.user == app.user %}
-                        <form action="{{ path('app_party_leave', {'id': party.id, 'characterId': char.id}) }}" method="post" style="display:inline;">
-                            <button type="submit" style="color:red; background:none; border:none; text-decoration:underline; cursor:pointer;">[quitter]</button>
+                        <form action="{{ path('app_party_leave', {'id': party.id, 'characterId': char.id}) }}" method="post" class="inline-row">
+                            <button type="submit" class="danger-link-button">[quitter]</button>
                         </form>
                     {% endif %}
                 </li>
@@ -70,7 +70,7 @@
                 <button type="submit">rejoindre</button>
             </form>
         {% else %}
-            <p style="color:red; font-weight:bold;">ce groupe est complet !</p>
+            <p class="flash-message flash-message-error">ce groupe est complet !</p>
         {% endif %}
     </div>
     {# fin bloc gestion membres #}

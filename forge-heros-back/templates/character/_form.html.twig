@@ -1,7 +1,7 @@
 {{ form_start(form) }}
 
     {# la ligne magique qui va nous dire ce qui bloque en secret #}
-<div style="color: red; font-weight: bold; margin-bottom: 10px;">
+<div class="flash-message flash-message-error">
     {{ form_errors(form) }}
 </div>
 
@@ -9,10 +9,10 @@
 
 <button class="btn">{{ button_label|default('save') }}</button>
 
-<div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border: 2px solid #ccc;">
-    <h3 style="margin-top: 0;">compteur de points (point buy)</h3>
+<div class="content-panel">
+    <h3>compteur de points (point buy)</h3>
     <p>rappel : stats entre 8 et 15. cout total : 27 points.</p>
-    <p style="font-size: 1.2em; font-weight: bold;">
+    <p>
         total utilise : <span id="point-counter">0</span> / 27
     </p>
 </div>

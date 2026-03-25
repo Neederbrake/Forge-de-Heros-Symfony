@@ -6,8 +6,8 @@
     <h1>Character index</h1>
 
     {# formulaire de recherche en methode get #}
-    <div style="background: #f1f1f1; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
-        <form method="get" action="{{ path('app_character_index') }}" style="display: flex; gap: 10px; align-items: center;">
+    <div class="filter-panel">
+        <form method="get" action="{{ path('app_character_index') }}" class="filter-row">
 
             {# champ de texte pour le nom #}
             <input type="text" name="search" placeholder="chercher un nom..." value="{{ app.request.query.get('search') }}">
@@ -34,7 +34,7 @@
 
             {# boutons d action #}
             <button type="submit">filtrer</button>
-            <a href="{{ path('app_character_index') }}" style="margin-left: 10px; text-decoration: none; color: gray;">reinitialiser</a>
+            <a href="{{ path('app_character_index') }}" class="muted-link">reinitialiser</a>
         </form>
     </div>
 
