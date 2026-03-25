@@ -1,87 +1,78 @@
-# projet forge de heros - backend symfony
+# projet forge de heros - backend symfony et theorie
 
-voici le guide complet pour configurer, installer et tester l application symfony et son api rest.
+ce readme contient les instructions du projet et les concepts cles du cours sur symfony et les api rest.
 
-## 1. configuration php (php.ini)
-avant de lancer le projet, verifiez que ces extensions sont bien activees (sans le point-virgule devant) dans votre fichier `php.ini` :
+## prerequis (php.ini)
+activez ces extensions dans php.ini (enlevez le point-virgule) :
 
 ```ini
-// pour l upload des images
+// pour upload images
 extension=fileinfo
 
-// pour les formulaires symfony
+// pour formulaires
 extension=intl
 
-// pour les caracteres speciaux
+// pour caracteres
 extension=mbstring
 
-// pour la base de donnees sqlite
+// pour base sqlite
 extension=pdo_sqlite
 extension=sqlite3
 
-# installe les dependances
+4. installation de la base de donnees
+ouvrez un terminal a la racine du projet :
+
+Bash
+# installe dependances
 composer install
 
-# cree la base vide
+# cree base vide
 php bin/console doctrine:database:create
 
-# lance les migrations
+# lance migrations
 php bin/console doctrine:migrations:migrate -n
 
-# charge la seed (races, classes, competences)
+# charge fausses donnees
 php bin/console doctrine:fixtures:load -n
 
-# demarre le serveur web symfony (methode recommandee)
+5. lancement du serveur
+Bash
+# demarre serveur web
 symfony server:start
 
-# demarre le serveur via php si symfony bug
+# alternative si symfony bug
 php -S 127.0.0.1:8000 -t public
 
-# vide le cache en cas de probleme d affichage
+# vide cache si probleme
 php bin/console cache:clear
 
-# liste toutes les routes disponibles sur le site
+# liste toutes les routes
 php bin/console debug:router
 
-l entree (accueil & connexion)
-accueil du site : http://127.0.0.1:8000/
+6. adresses du site (endpoints)
+interface web (twig)
+accueil : http://127.0.0.1:8000/
 
-creer un compte : http://127.0.0.1:8000/register (pratique pour tester un nouveau joueur)
+creer compte : http://127.0.0.1:8000/register
 
-se connecter : http://127.0.0.1:8000/login
+connexion : http://127.0.0.1:8000/login
 
-la zone d administration (le maitre du jeu)
-il faut etre connecte avec un compte qui possede le role_admin pour y acceder, sinon acces refuse !
+zone admin (role_admin requis)
+gerer races : http://127.0.0.1:8000/race
 
-gerer les races : http://127.0.0.1:8000/race
+gerer classes : http://127.0.0.1:8000/character-class
 
-gerer les classes : http://127.0.0.1:8000/character-class
+gerer competences : http://127.0.0.1:8000/skill
 
-gerer les competences : http://127.0.0.1:8000/skill
+zone joueurs (connexion requise)
+mes heros : http://127.0.0.1:8000/character
 
-la zone des joueurs
-n importe quel utilisateur connecte y a acces.
+nouveau heros : http://127.0.0.1:8000/character/new
 
-liste de mes heros : http://127.0.0.1:8000/character
+api rest (format json)
+point d entree : https://www.google.com/search?q=http://127.0.0.1:8000/api/v1/
 
-creer un nouveau heros : http://127.0.0.1:8000/character/new
+7. comptes de test preconfigures
+admin : user@gmail.com / mdp: user123
 
-l api rest (partie b)
-accessible publiquement pour l application react.
-
-point d entree principal : https://www.google.com/search?q=http://127.0.0.1:8000/api/v1/
-
-5. comptes de test preconfigures
-voici les identifiants pour tester rapidement les differents roles sur le site :
-
-compte administrateur :
-
-email : user@gmail.com
-
-mdp : user123
-
-compte joueur classique :
-
-email : user1@gmail.com
-
-mdp : user123
+joueur : user1@gmail.com / mdp: user123
