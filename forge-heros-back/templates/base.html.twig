@@ -28,13 +28,15 @@
         <a href="{{ path('app_party_index') }}" class="site-nav-link">mes groupes</a>
         {# bouton creer groupe #}
         <a href="{{ path('app_party_new') }}" class="site-nav-link site-nav-link-cta">+ creer groupe</a>
-        <a href="{{ path('app_skill_index') }}" class="site-nav-link">competences</a>
 
         {# menu special admin #}
         {% if is_granted('ROLE_ADMIN') %}
             <span class="site-nav-separator">admin :</span>
-            <a href="{{ path('app_race_index') }}" class="site-nav-link">races</a>
-            <a href="{{ path('app_character_class_index') }}" class="site-nav-link">classes</a>
+            <div class="site-nav-admin-group">
+                <a href="{{ path('app_race_index') }}" class="site-nav-link">races</a>
+                <a href="{{ path('app_skill_index') }}" class="site-nav-link">competences</a>
+                <a href="{{ path('app_character_class_index') }}" class="site-nav-link">classes</a>
+            </div>
         {% endif %}
     </div>
 
