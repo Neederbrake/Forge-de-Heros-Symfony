@@ -18,27 +18,33 @@ class RegistrationFormType extends AbstractType
     {
         // construit le formulaire d inscription
         $builder
-            ->add('username')
-            ->add('email')
+            ->add('username', null, [
+                'label' => 'Nom d\'utilisateur'
+            ])
+            ->add('email', null, [
+                'label' => 'Adresse e-mail'
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label' => 'J\'accepte les conditions d\'utilisation',
                 'constraints' => [
                     new IsTrue(
-                        message: 'You should agree to our terms.',
+                        message: 'Vous devez accepter nos conditions d\'utilisation.',
                     ),
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
                 // le mot de passe est traite dans le controller
                 'mapped' => false,
+                'label' => 'Mot de passe',
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank(
-                        message: 'Please enter a password',
+                        message: 'Veuillez entrer un mot de passe',
                     ),
                     new Length(
                         min: 6,
-                        minMessage: 'Your password should be at least {{ limit }} characters',
+                        minMessage: 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
                         // limite max pour la securite
                         max: 4096,
                     ),

@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Character{% endblock %}
+{% block title %}Modifier le personnage{% endblock %}
 
 {% block body %}
-    <h1>Edit Character</h1>
+    <h1>Modifier le personnage</h1>
 
-    {{ include('character/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('character/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('app_character_index') }}">back to list</a>
+    <a href="{{ path('app_character_index') }}">retour à la liste</a>
 
     {{ include('character/_delete_form.html.twig') }}
 {% endblock %}

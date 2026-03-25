@@ -77,7 +77,7 @@ final class PartyController extends AbstractController
     {
         // bloque si pas proprietaire ni admin
         if ($party->getCreator() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('acces refuse');
+            throw $this->createAccessDeniedException('Access denied');
         }
         $form = $this->createForm(PartyType::class, $party);
         $form->handleRequest($request);
@@ -99,7 +99,7 @@ final class PartyController extends AbstractController
     {
         // bloque si pas proprietaire ni admin
         if ($party->getCreator() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('acces refuse');
+            throw $this->createAccessDeniedException('Access denied');
         }
         if ($this->isCsrfTokenValid('delete'.$party->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($party);
@@ -118,7 +118,7 @@ final class PartyController extends AbstractController
 
         // verifie la place
         if (count($party->getCharacters()) >= $party->getMaxSize()) {
-            $this->addFlash('error', 'ce groupe est complet.');
+            $this->addFlash('error', 'This group is full.');
             return $this->redirectToRoute('app_party_show', ['id' => $party->getId()]);
         }
 

@@ -15,15 +15,22 @@ class CharacterClassType extends AbstractType
     {
         // construit le formulaire de classe
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('healthDice')
+            ->add('name', null, [
+                'label' => 'Nom de la classe'
+            ])
+            ->add('description', null, [
+                'label' => 'Description'
+            ])
+            ->add('healthDice', null, [
+                'label' => 'Dé de vie'
+            ])
             ->add('skills', EntityType::class, [
                 // champ de selection multiple
                 'class' => Skill::class,
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
+                'label' => 'Compétences'
             ])
         ;
     }

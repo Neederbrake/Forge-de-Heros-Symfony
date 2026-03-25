@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New character{% endblock %}
+{% block title %}Nouveau personnage{% endblock %}
 
 {% block body %}
-    <h1>create new character</h1>
+    <h1>créer un nouveau personnage</h1>
 
     {# safe post form open #}
     {{ form_start(form) }}
@@ -12,19 +12,19 @@
     {{ form_widget(form) }}
 
     {# official submit btn #}
-    <button style="margin-top: 15px;" type="submit">save</button>
+    <button style="margin-top: 15px;" type="submit">enregistrer</button>
 
     {{ form_end(form) }}
 
     {# point counter box #}
     <div style="background: #f9f9f9; padding: 15px; margin-top: 20px; border: 1px solid #ddd;">
-        <h3>point counter (point buy)</h3>
-        <p>reminder: stats between 8 and 15. total cost: 27 points.</p>
-        <p><strong>total used: <span id="point-total" style="color: red;">0</span> / 27</strong></p>
+        <h3>compteur de points (point buy)</h3>
+        <p>rappel : stats entre 8 et 15. coût total : 27 points.</p>
+        <p><strong>total utilisé : <span id="point-total" style="color: red;">0</span> / 27</strong></p>
     </div>
 
     <br>
-    <a href="{{ path('app_character_index') }}">back to list</a>
+    <a href="{{ path('app_character_index') }}">retour à la liste</a>
 
     {# live calc script #}
     <script>

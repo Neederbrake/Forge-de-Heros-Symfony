@@ -13,8 +13,12 @@ class RaceType extends AbstractType
     {
         // construit le formulaire de race
         $builder
-            ->add('name')
-            ->add('description')
+            ->add('name', null, [
+                'label' => 'Nom de la race'
+            ])
+            ->add('description', null, [
+                'label' => 'Description'
+            ])
         ;
     }
 
