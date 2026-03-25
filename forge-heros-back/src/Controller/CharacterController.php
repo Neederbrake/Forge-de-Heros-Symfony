@@ -151,7 +151,7 @@ final class CharacterController extends AbstractController
     {
         // bloque si pas proprietaire ni admin
         if ($character->getUser() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('acces refuse');
+            throw $this->createAccessDeniedException('Access denied');
         }
 
         return $this->render('character/show.html.twig', [
@@ -164,7 +164,7 @@ final class CharacterController extends AbstractController
     {
         // bloque si pas proprietaire ni admin
         if ($character->getUser() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('acces refuse');
+            throw $this->createAccessDeniedException('Access denied');
         }
 
         // charge formulaire
@@ -196,7 +196,7 @@ final class CharacterController extends AbstractController
 
             // bloque modif
             if (!$isValid || $totalCost !== 27) {
-                $this->addFlash('error', 'les stats doivent couter exactement 27 points et etre entre 8 et 15.');
+                $this->addFlash('error', 'Stats must cost exactly 27 points and be between 8 and 15.');
                 return $this->render('character/edit.html.twig', [
                     'character' => $character,
                     'form' => $form,
@@ -226,7 +226,7 @@ final class CharacterController extends AbstractController
     {
         // bloque si pas proprietaire ni admin
         if ($character->getUser() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('acces refuse');
+            throw $this->createAccessDeniedException('Access denied');
         }
 
         // verifie token et supprime

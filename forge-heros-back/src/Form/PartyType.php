@@ -15,17 +15,25 @@ class PartyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('maxSize')
+            ->add('name', null, [
+                'label' => 'Nom du groupe'
+            ])
+            ->add('description', null, [
+                'label' => 'Description'
+            ])
+            ->add('maxSize', null, [
+                'label' => 'Taille maximum'
+            ])
             ->add('creator', EntityType::class, [
                 'class' => user::class,
                 'choice_label' => 'id',
+                'label' => 'Créateur'
             ])
             ->add('characters', EntityType::class, [
                 'class' => Character::class,
                 'choice_label' => 'id',
                 'multiple' => true,
+                'label' => 'Personnages'
             ])
         ;
     }

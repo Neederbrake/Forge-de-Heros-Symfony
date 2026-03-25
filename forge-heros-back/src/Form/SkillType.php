@@ -15,8 +15,12 @@ class SkillType extends AbstractType
     {
         // construit le formulaire de competence
         $builder
-            ->add('name')
-            ->add('ability')
+            ->add('name', null, [
+                'label' => 'Nom de la compétence'
+            ])
+            ->add('ability', null, [
+                'label' => 'Caractéristique associée'
+            ])
 
         ;
     }
