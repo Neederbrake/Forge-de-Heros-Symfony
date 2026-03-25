@@ -45,6 +45,8 @@ security:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         # inscription accessible
         - { path: ^/register, roles: PUBLIC_ACCESS }
+        # api publique pour l'application react
+        - { path: ^/api/v1, roles: PUBLIC_ACCESS }
         # tout le reste bloque
         - { path: ^/, roles: ROLE_USER }
 
