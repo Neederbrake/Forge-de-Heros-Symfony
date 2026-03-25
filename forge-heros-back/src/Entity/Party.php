@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\User;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PartyRepository::class)]
 class Party
@@ -15,15 +16,19 @@ class Party
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['party:read', 'character:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['party:read', 'character:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['party:read'])]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Groups(['party:read'])]
     private ?int $maxSize = null;
 
     // correction ici : User avec majuscule
@@ -35,6 +40,7 @@ class Party
      * @var Collection<int, Character>
      */
     #[ORM\ManyToMany(targetEntity: Character::class, inversedBy: 'parties')]
+    #[Groups(['party:read'])]
     private Collection $characters;
 
     public function __construct()

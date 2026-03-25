@@ -136,6 +136,7 @@
       <excludeFolder url="file://$MODULE_DIR$/forge-heros-back/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/forge-heros-back/vendor/doctrine/data-fixtures" />
       <excludeFolder url="file://$MODULE_DIR$/forge-heros-back/vendor/doctrine/doctrine-fixtures-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/forge-heros-back/vendor/nelmio/cors-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

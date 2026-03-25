@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\User;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 class Character
@@ -14,36 +15,47 @@ class Character
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['character:read', 'party:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['character:read', 'party:read'])]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Groups(['character:read', 'party:read'])]
     private ?int $level = null;
 
     #[ORM\Column]
+    #[Groups(['character:read', 'party:read'])]
     private ?int $strength = null;
 
     #[ORM\Column]
+    #[Groups(['character:read', 'party:read'])]
     private ?int $dexterity = null;
 
     #[ORM\Column]
+    #[Groups(['character:read', 'party:read'])]
     private ?int $constitution = null;
 
     #[ORM\Column]
+    #[Groups(['character:read', 'party:read'])]
     private ?int $intelligence = null;
 
     #[ORM\Column]
+    #[Groups(['character:read', 'party:read'])]
     private ?int $wisdom = null;
 
     #[ORM\Column]
+    #[Groups(['character:read', 'party:read'])]
     private ?int $charisma = null;
 
     #[ORM\Column]
+    #[Groups(['character:read', 'party:read'])]
     private ?int $healthPoints = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['character:read', 'party:read'])]
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
@@ -52,16 +64,19 @@ class Character
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['character:read', 'party:read'])]
     private ?Race $race = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['character:read', 'party:read'])]
     private ?CharacterClass $characterClass = null;
 
     /**
      * @var Collection<int, Party>
      */
     #[ORM\ManyToMany(targetEntity: Party::class, mappedBy: 'characters')]
+    #[Groups(['character:read'])]
     private Collection $parties;
 
     public function __construct()
