@@ -13,28 +13,39 @@
 </head>
 <body>
 {# menu de navigation global #}
-<nav style="padding: 10px; background: #eee; margin-bottom: 20px;">
-    <a href="{{ path('app_home') }}">accueil</a> |
+<nav style="display: flex; gap: 15px; align-items: center; padding: 10px; background: #f0f0f0;">
+    {# lien accueil pour tous #}
+    <a href="/">accueil</a>
 
-    {# si utilisateur connecte #}
+    {# menu pour les joueurs connectes #}
     {% if app.user %}
-        <span>bonjour {{ app.user.username }} !</span> |
-        <a href="{{ path('app_logout') }}">se deconnecter</a>
 
-        {# menu specifique admin #}
+        <a href="{{ path('app_character_index') }}">mes heros</a>
+        {# bouton creer heros #}
+        <a href="{{ path('app_character_new') }}" style="background: #4caf50; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px;">+ creer heros</a>
+
+        <a href="{{ path('app_party_index') }}">mes groupes</a>
+        {# bouton creer groupe #}
+        <a href="{{ path('app_party_new') }}" style="background: #008cba; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px;">+ creer groupe</a>
+
+        {# menu special admin #}
         {% if is_granted('ROLE_ADMIN') %}
-            <br><br>
-            <strong>administration :</strong>
-            <a href="{{ path('app_race_index') }}">races</a> |
-            <a href="{{ path('app_character_class_index') }}">classes</a> |
-            <a href="{{ path('app_skill_index') }}">competences</a> |
-            <a href="{{ path('app_admin_user_index') }}">joueurs</a>
+            <span style="border-left: 1px solid #ccc; padding-left: 15px;">admin :</span>
+            <a href="{{ path('app_race_index') }}">races</a>
+            <a href="{{ path('app_character_class_index') }}">classes</a>
+            <a href="{{ path('app_skill_index') }}">competences</a>
         {% endif %}
 
-        {# si visiteur non connecte #}
+        {# infos joueur et deconnexion #}
+        <span style="margin-left: auto;">joueur : {{ app.user.userIdentifier }}</span>
+        <a href="{{ path('app_logout') }}">deconnexion</a>
+
+        {# menu pour les non connectes #}
     {% else %}
-        <a href="{{ path('app_login') }}">se connecter</a> |
-        <a href="{{ path('app_register') }}">s inscrire</a>
+        <span style="margin-left: auto;">
+            <a href="{{ path('app_login') }}">connexion</a>
+            <a href="{{ path('app_register') }}">inscription</a>
+        </span>
     {% endif %}
 </nav>
 
