@@ -115,7 +115,10 @@ final class CharacterController extends AbstractController
             // save image
             $imageFile = $form->get('image')->getData();
             if ($imageFile) {
-                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                $originalExtension = strtolower((string) $imageFile->getClientOriginalExtension());
+                $extension = in_array($originalExtension, $allowedExtensions, true) ? $originalExtension : 'bin';
+                $newFilename = uniqid('', true).'.'.$extension;
                 $imageFile->move(
                     $this->getParameter('kernel.project_dir').'/public/uploads/characters',
                     $newFilename
