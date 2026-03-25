@@ -257,6 +257,23 @@ button:hover,
     font-weight: 600;
 }
 
+.remember-me-row {
+    display: flex;
+    align-items: center;
+}
+
+.remember-me-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.remember-me-input {
+    width: auto;
+    margin: 0;
+}
+
 .filter-panel,
 .content-panel {
     background: var(--primary-100);
